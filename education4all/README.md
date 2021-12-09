@@ -1,70 +1,54 @@
-# App-Landing_Page
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://rocketseat.com.br">
+    <img src="https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/rocketseat_logo_roxa.png" alt="Logo">
+  </a>
 
-This is a clean and modern Free responsive app landing-page template for Mobile App. Built with Bootstrap 4.1.x frontend Framework. The codebase is well organized and very easy to customize. Best suited to present and promote your startup mobile apps in your official website. The overall design is simple and clean, crafted with great assuring pixel perfection, so that the bootstrap based landing-page template can adapt automatically vast array of screen and devices like Desktop, Mobile phone, Iphone, Ipad, feature phone and Google android powered devices. So, grab the template, add easy allowing customization, and go live.
+  <h3 align="center">DESAFIO DoWhile</h3>
+</p>
 
+<p align="center">
+  <a href="#sobre o desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+</p>
 
-## Download and Installation
+## 💻Sobre o desafio
+Neste desafio você irá desenvolver uma página web utilizando **HTML**, **CSS** e **JavaScript** que deverá resolver o seguinte problema 👇
 
-- Clone the repo:https://github.com/robinbansal/App-Landing-Page.git
-- [Fork, Clone, or Download on GitHub](https://github.com/robinbansal/App-Landing-Page)
+> "Pensando em construir o futuro, como você solucionaria os problemas de acesso à educação hoje, utilizando a tecnologia?"
+> 
 
-## Live Preview
-  [View Live Preview](https://robinbansal.github.io/App-Landing_Page/)
-## App-Landing-Page Template
+Para este desafio, você deve criar uma landing page explicando, da maneira mais clara possível, a sua solução. Dessa forma, se você pensar em alguma plataforma complexa, não será preciso desenvolvê-la por inteiro, basta explicar o seu funcionamento e como ela vai resolver o problema apresentado acima. Idealize um produto, e crie uma página para apresentá-lo como solução ao problema.
 
-  ![2018-04-28](https://user-images.githubusercontent.com/26331958/39387011-eb1a5a4a-4a94-11e8-82a5-0de955b9acc2.png)
+## 🚀Tecnologias
 
-  ![2018-04-28 1](https://user-images.githubusercontent.com/26331958/39387057-1e61afb6-4a95-11e8-93cf-5861a7ccb65e.png)
+- [HTML5](https://www.w3schools.com/html/)
+- [CSS3](https://www.w3schools.com/css/)
+- [Java Script](https://www.javascript.com)
+- [Bootstrap4](https://getbootstrap.com/)
+- [Animate CSS](https://animate.style/)
+- [Wow JS](https://wowjs.uk/)
 
-App landing page is a free, responsive website theme , using the Bootstrap 4 framework and HTML5 layouts, converted from a HTML template, without any 3rd party dependencies.
+## 💻Projeto
 
-## Responsive Design!
+O Education4All é um aplicativo para solução do acesso à educação utilizado a tecnologia, com ele você aprenderá conteúdos de português, inglês básico, lógica de programação, física, química, geografia, história, entre outros, você pode assistir aulas e tirar suas dúvidas em tempo real.
 
-Change the size and it responds in turn.
+O Education4All poderá ser mantida atráves de professores que apoiam o projeto, patrocinadores e adsenses que manteram a ferramenta.
 
-![2018-04-28 2](https://user-images.githubusercontent.com/26331958/39387102-64f039e8-4a95-11e8-9a6b-9ddd96f1301f.png)![2018-04-28 3](https://user-images.githubusercontent.com/26331958/39387120-7f6a8738-4a95-11e8-8d7d-557ae6b90299.png)
+[Ver projeto na Netlify](https://education4all.netlify.app/)
 
+### Executando o projeto localmente
 
+Clonar o repositório
+```bash
+git clone https://github.com/ifabianoi/rocketseat.git
+```
 
-## Features
-- Fully Responsive
-- HTML5 + CSS3
-- Built on Bootstrap 4
-- LESS files included
-- Compatible with all modern browsers
+Acesse a pasta education4all
+```bash
+cd education4all/
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Bugs and Issues
- Have a bug or an issue with this template?[Open a new issue](https://github.com/robinbansal/App-Landing-Page/issues/new) here on Github.
- 
-## Features
-
- - Responsive design
- - High overall quality
- - Animated testimonials
- - Reveals Animation when scrolling
- - Contact Box
- 
- ## License
- 
-   MIT License
-
-Copyright (c) 2018 Robin Bansal
- 
- 
- 
+e abra o arquivo index.html
