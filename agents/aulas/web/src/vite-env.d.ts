@@ -1,13 +1,10 @@
-import path from 'node:path'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+/// <reference types="vite/client" />
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-})
+interface ImportMetaEnv {
+  readonly VITE_HOST_PRODUCTION: string;
+  // adicione outras variáveis públicas aqui se quiser
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
