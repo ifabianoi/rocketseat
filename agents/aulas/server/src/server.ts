@@ -40,7 +40,8 @@ app.register(uploadAudioRoute)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }) // necessário para Railway aceitar conexões externas
   .then(() => {
-    console.log(`🚀 HTTP server running on port ${env.PORT}`)
+    console.log(`🚀 HTTP server running at http://localhost:${env.PORT}`)
+    console.log(`🌐 External access (if configured): ${env.HOST_PRODUCTION ?? 'not set'}`)
   })
   .catch((err) => {
     console.error('❌ Failed to start server:', err)
