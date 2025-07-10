@@ -2,7 +2,7 @@
   <img src="https://storage.googleapis.com/star-lab/blog/OGs/nlw-agents.webp" alt="NLW Agents" width="600"/>
 </p>
 
-# LetMeAsk NLW Agents
+# LetMeAsk NLW Agents [Ver Funcionando](https://letmeask.up.railway.app/}
 
 Sistema de perguntas e respostas com transcrição e análise de áudio, dividido em dois projetos: **WEB** (frontend) e **SERVER** (backend).
 
