@@ -1,5 +1,5 @@
 # Variables
-@baseUrl = http://localhost:3333
+@baseUrl = http://backend-production-1d17.up.railway.app
 
 # Health check
 # @name healthCheck

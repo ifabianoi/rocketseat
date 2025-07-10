@@ -22,6 +22,20 @@
       "when": 1751466534855,
       "tag": "0002_quiet_corsair",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1751991425067,
+      "tag": "0003_fast_strong_guy",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752104573197,
+      "tag": "0004_square_fixer",
+      "breakpoints": true
     }
   ]
 }
