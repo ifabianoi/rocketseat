@@ -40,6 +40,6 @@ export async function getOrganization(app: FastifyInstance) {
         return {
           organization,
         }
-      },
+      }
     )
 }

@@ -24,7 +24,7 @@ const organizationSchema = zod
           }
           return true
         },
-        { message: 'Please, enter a valid domain.' },
+        { message: 'Please, enter a valid domain.' }
       ),
     shouldAttachUsersByDomain: zod
       .union([zod.literal('on'), zod.literal('off'), zod.boolean()])
@@ -42,7 +42,7 @@ const organizationSchema = zod
     {
       message: 'Domain is required when auto-join is enabled.',
       path: ['domain'],
-    },
+    }
   )
 
 export type OrganizationSchema = zod.infer<typeof organizationSchema>

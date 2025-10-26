@@ -37,7 +37,7 @@ export async function getInvites(app: FastifyInstance) {
                       name: zod.string().nullable(),
                     })
                     .nullable(),
-                }),
+                })
               ),
             }),
           },
@@ -54,7 +54,7 @@ export async function getInvites(app: FastifyInstance) {
 
         if (cannot('get', 'Invite')) {
           throw new UnauthorizedError(
-            `You're not allowed to get organization invites.`,
+            `You're not allowed to get organization invites.`
           )
         }
 
@@ -80,6 +80,6 @@ export async function getInvites(app: FastifyInstance) {
         })
 
         return { invites }
-      },
+      }
     )
 }

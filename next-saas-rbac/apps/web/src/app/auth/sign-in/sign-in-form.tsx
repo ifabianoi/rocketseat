@@ -20,7 +20,7 @@ export function SignInForm() {
   const searchParams = useSearchParams()
 
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
-    signInWithEmailAndPassword,
+    signInWithEmailAndPassword
   )
 
   return (

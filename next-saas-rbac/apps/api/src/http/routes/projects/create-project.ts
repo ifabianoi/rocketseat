@@ -45,7 +45,7 @@ export async function createProject(app: FastifyInstance) {
 
         if (cannot('create', 'Project')) {
           throw new UnauthorizedError(
-            `You're not allowed to create new projects.`,
+            `You're not allowed to create new projects.`
           )
         }
 
@@ -64,6 +64,6 @@ export async function createProject(app: FastifyInstance) {
         return reply.status(201).send({
           projectId: project.id,
         })
-      },
+      }
     )
 }
