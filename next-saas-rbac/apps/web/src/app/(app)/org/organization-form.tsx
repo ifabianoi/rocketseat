@@ -28,7 +28,7 @@ export function OrganizationForm({
     ? updateOrganizationAction
     : createOrganizationAction
 
-    const [{ errors, message, success }, handleSubmit, isPending] =
+  const [{ success, message, errors }, handleSubmit, isPending] =
     useFormState(formAction)
 
   return (
@@ -54,7 +54,7 @@ export function OrganizationForm({
       )}
 
       <div className="space-y-1">
-        <Label htmlFor="name">Organization name</Label>
+        <Label htmlFor="name">Organization Name</Label>
         <Input name="name" id="name" defaultValue={initialData?.name} />
 
         {errors?.name && (
@@ -84,20 +84,21 @@ export function OrganizationForm({
 
       <div className="space-y-1">
         <div className="flex items-start space-x-2">
-        <div className="translate-y-0.5">
           <Checkbox
             name="shouldAttachUsersByDomain"
-            id="shouldAttachUsersByDomain"            
+            id="shouldAttachUsersByDomain"
+            className="translate-y-[5px]"
             defaultChecked={initialData?.shouldAttachUsersByDomain}
           />
-          </div>
+
           <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
             <span className="text-sm font-medium leading-none">
               Auto-join new members
             </span>
+
             <p className="text-sm text-muted-foreground">
               This will automatically invite all members with same e-mail domain
-              to this organization.
+              to this organization.{' '}
             </p>
           </label>
         </div>
@@ -109,7 +110,7 @@ export function OrganizationForm({
         )}
       </div>
 
-      <Button className="w-full" type="submit" disabled={isPending}>
+      <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? (
           <Loader2 className="size-4 animate-spin" />
         ) : (
