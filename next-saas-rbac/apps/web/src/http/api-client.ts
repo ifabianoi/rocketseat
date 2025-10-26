@@ -1,6 +1,5 @@
 import { env } from '@saas/env'
-import { getCookie } from 'cookies-next'
-import { CookiesFn } from 'cookies-next/lib/types'
+import { type CookiesFn, getCookie } from 'cookies-next'
 import ky from 'ky'
 
 export const api = ky.create({
@@ -15,7 +14,8 @@ export const api = ky.create({
 
           cookieStore = serverCookies
         }
-        const token = getCookie('token', { cookies: cookieStore })
+
+        const token = await getCookie('token', { cookies: cookieStore })
 
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`)

@@ -1,7 +1,7 @@
 'use client'
 
-import { Role } from '@saas/auth'
-import { ComponentProps } from 'react'
+import type { Role } from '@saas/auth'
+import type { ComponentProps } from 'react'
 
 import {
   Select,
@@ -31,9 +31,15 @@ export function UpdateMemberRoleSelect({
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="ADMIN">Admin</SelectItem>
-        <SelectItem value="MEMBER">Member</SelectItem>
-        <SelectItem value="BILLING">Billing</SelectItem>
+        <SelectItem className="cursor-pointer" value="ADMIN">
+          Admin
+        </SelectItem>
+        <SelectItem className="cursor-pointer" value="MEMBER">
+          Member
+        </SelectItem>
+        <SelectItem className="cursor-pointer" value="BILLING">
+          Billing
+        </SelectItem>
       </SelectContent>
     </Select>
   )

@@ -16,7 +16,7 @@ import {
 } from './ui/dropdown-menu'
 
 export async function OrganizationSwitcher() {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
 
   const { organizations } = await getOrganizations()
 
@@ -29,6 +29,7 @@ export async function OrganizationSwitcher() {
       <DropdownMenuTrigger className="flex w-[168px] items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-primary">
         {currentOrganization ? (
           <>
+            {' '}
             <Avatar className="size-4">
               {currentOrganization.avatarUrl && (
                 <AvatarImage src={currentOrganization.avatarUrl} />
@@ -55,7 +56,10 @@ export async function OrganizationSwitcher() {
           {organizations.map((organization) => {
             return (
               <DropdownMenuItem key={organization.id} asChild>
-                <Link href={`/org/${organization.slug}`}>
+                <Link
+                  href={`/org/${organization.slug}`}
+                  className="cursor-pointer"
+                >
                   <Avatar className="mr-2 size-4">
                     {organization.avatarUrl && (
                       <AvatarImage src={organization.avatarUrl} />
@@ -70,7 +74,7 @@ export async function OrganizationSwitcher() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/create-organization">
+          <Link href="/create-organization" className="cursor-pointer">
             <PlusCircle className="mr-2 size-4" />
             Create new
           </Link>

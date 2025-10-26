@@ -1,6 +1,10 @@
-import { Role } from '@saas/auth'
+import type { Role } from '@saas/auth'
 
 import { api } from './api-client'
+
+interface GetInvitesRequest {
+  org: string
+}
 
 interface GetInvitesResponse {
   invites: {
@@ -15,13 +19,9 @@ interface GetInvitesResponse {
   }[]
 }
 
-export async function getInvites(org: string) {
+export async function getInvites({ org }: GetInvitesRequest) {
   const result = await api
-    .get(`organizations/${org}/invites`, {
-      next: {
-        tags: [`${org}/invites`],
-      },
-    })
+    .get(`organizations/${org}/invites`)
     .json<GetInvitesResponse>()
 
   return result

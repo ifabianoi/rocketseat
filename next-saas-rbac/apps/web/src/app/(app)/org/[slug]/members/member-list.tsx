@@ -14,13 +14,13 @@ import { removeMemberAction } from './actions'
 import { UpdateMemberRoleSelect } from './update-member-role-select'
 
 export async function MemberList() {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
   const permissions = await ability()
 
   const [{ membership }, { members }, { organization }] = await Promise.all([
     getMembership(currentOrg!),
-    getMembers(currentOrg!),
-    getOrganization(currentOrg!),
+    getMembers({ org: currentOrg! }),
+    getOrganization({ org: currentOrg! }),
   ])
 
   const authOrganization = organizationSchema.parse(organization)

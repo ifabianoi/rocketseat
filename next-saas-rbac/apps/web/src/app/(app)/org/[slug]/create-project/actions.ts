@@ -9,7 +9,7 @@ import { createProject } from '@/http/create-project'
 const projectSchema = z.object({
   name: z
     .string()
-    .min(4, { message: 'Please, incluide at least 4 characters.' }),
+    .min(4, { message: 'Please, include at least 4 characters.' }),
   description: z.string(),
 })
 
@@ -24,9 +24,11 @@ export async function createProjectAction(data: FormData) {
 
   const { name, description } = result.data
 
+  const orgSlug = await getCurrentOrg()
+
   try {
     await createProject({
-      org: getCurrentOrg()!,
+      org: orgSlug!,
       name,
       description,
     })
@@ -36,8 +38,6 @@ export async function createProjectAction(data: FormData) {
 
       return { success: false, message, errors: null }
     }
-
-    console.error(err)
 
     return {
       success: false,

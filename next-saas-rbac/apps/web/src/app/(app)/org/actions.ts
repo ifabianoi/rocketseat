@@ -12,18 +12,17 @@ const organizationSchema = z
   .object({
     name: z
       .string()
-      .min(4, { message: 'Please, incluide at least 4 characters.' }),
+      .min(4, { message: 'Please, include at least 4 characters.' }),
     domain: z
       .string()
       .nullable()
       .refine(
         (value) => {
           if (value) {
-            const domainRegex = /^[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
+            const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
             return domainRegex.test(value)
           }
-
           return true
         },
         {
@@ -77,8 +76,6 @@ export async function createOrganizationAction(data: FormData) {
       return { success: false, message, errors: null }
     }
 
-    console.error(err)
-
     return {
       success: false,
       message: 'Unexpected error, try again in a few minutes.',
@@ -94,8 +91,7 @@ export async function createOrganizationAction(data: FormData) {
 }
 
 export async function updateOrganizationAction(data: FormData) {
-  const currentOrg = getCurrentOrg()
-
+  const currentOrg = await getCurrentOrg()
   const result = organizationSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
@@ -121,8 +117,6 @@ export async function updateOrganizationAction(data: FormData) {
 
       return { success: false, message, errors: null }
     }
-
-    console.error(err)
 
     return {
       success: false,

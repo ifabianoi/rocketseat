@@ -1,6 +1,6 @@
 'use server'
 
-import { Role, roleSchema } from '@saas/auth'
+import { type Role, roleSchema } from '@saas/auth'
 import { HTTPError } from 'ky'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
@@ -17,7 +17,7 @@ const inviteSchema = z.object({
 })
 
 export async function createInviteAction(data: FormData) {
-  const currentOrg = getCurrentOrg()!
+  const currentOrg = await getCurrentOrg()
   const result = inviteSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
@@ -43,8 +43,6 @@ export async function createInviteAction(data: FormData) {
       return { success: false, message, errors: null }
     }
 
-    console.error(err)
-
     return {
       success: false,
       message: 'Unexpected error, try again in a few minutes.',
@@ -60,7 +58,7 @@ export async function createInviteAction(data: FormData) {
 }
 
 export async function removeMemberAction(memberId: string) {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
 
   await removeMember({
     org: currentOrg!,
@@ -71,7 +69,7 @@ export async function removeMemberAction(memberId: string) {
 }
 
 export async function updateMemberAction(memberId: string, role: Role) {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
 
   await updateMember({
     org: currentOrg!,
@@ -83,7 +81,7 @@ export async function updateMemberAction(memberId: string, role: Role) {
 }
 
 export async function revokeInviteAction(inviteId: string) {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
 
   await revokeInvite({
     org: currentOrg!,

@@ -1,11 +1,12 @@
+import type { ReactNode } from 'react'
+
 import { Header } from '@/components/header'
 import { Tabs } from '@/components/tabs'
 
-export default function OrgLayout({
+export default async function OrgLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
-}>) {
+  children: ReactNode }>) {
   return (
     <div>
       <div className="pt-6">

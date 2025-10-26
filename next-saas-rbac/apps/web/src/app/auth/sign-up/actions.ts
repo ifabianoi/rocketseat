@@ -1,6 +1,7 @@
 'use server'
 
 import { HTTPError } from 'ky'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 import { signUp } from '@/http/sign-up'
@@ -47,8 +48,6 @@ export async function signUpAction(data: FormData) {
       return { success: false, message, errors: null }
     }
 
-    console.error(err)
-
     return {
       success: false,
       message: 'Unexpected error, try again in a few minutes.',
@@ -56,5 +55,5 @@ export async function signUpAction(data: FormData) {
     }
   }
 
-  return { success: true, message: null, errors: null }
+  redirect('/auth/sign-in')
 }

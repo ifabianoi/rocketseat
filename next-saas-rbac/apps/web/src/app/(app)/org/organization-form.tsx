@@ -11,7 +11,7 @@ import { useFormState } from '@/hooks/use-form-state'
 
 import {
   createOrganizationAction,
-  OrganizationSchema,
+  type OrganizationSchema,
   updateOrganizationAction,
 } from './actions'
 
@@ -28,7 +28,7 @@ export function OrganizationForm({
     ? updateOrganizationAction
     : createOrganizationAction
 
-  const [{ errors, message, success }, handleSubmit, isPending] =
+    const [{ errors, message, success }, handleSubmit, isPending] =
     useFormState(formAction)
 
   return (
@@ -84,12 +84,12 @@ export function OrganizationForm({
 
       <div className="space-y-1">
         <div className="flex items-start space-x-2">
-          <div className="translate-y-0.5">
-            <Checkbox
-              name="shouldAttachUsersByDomain"
-              id="shouldAttachUsersByDomain"
-              defaultChecked={initialData?.shouldAttachUsersByDomain}
-            />
+        <div className="translate-y-0.5">
+          <Checkbox
+            name="shouldAttachUsersByDomain"
+            id="shouldAttachUsersByDomain"            
+            defaultChecked={initialData?.shouldAttachUsersByDomain}
+          />
           </div>
           <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
             <span className="text-sm font-medium leading-none">

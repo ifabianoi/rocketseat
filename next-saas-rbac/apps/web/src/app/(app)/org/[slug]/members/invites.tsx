@@ -7,10 +7,9 @@ import { CreateInviteForm } from './create-invite-form'
 import { RevokeInviteButton } from './revoke-invite-button'
 
 export async function Invites() {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
   const permissions = await ability()
-
-  const { invites } = await getInvites(currentOrg!)
+  const { invites } = await getInvites({ org: currentOrg! })
 
   return (
     <div className="space-y-4">

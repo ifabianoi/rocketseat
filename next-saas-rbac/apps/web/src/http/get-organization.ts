@@ -1,5 +1,9 @@
 import { api } from './api-client'
 
+interface GetOrganizationRequest {
+  org: string
+}
+
 interface GetOrganizationResponse {
   organization: {
     slug: string
@@ -14,13 +18,9 @@ interface GetOrganizationResponse {
   }
 }
 
-export async function getOrganization(org: string) {
+export async function getOrganization({ org }: GetOrganizationRequest) {
   const result = await api
-    .get(`organizations/${org}`, {
-      next: {
-        tags: ['organization'],
-      },
-    })
+    .get(`organizations/${org}`)
     .json<GetOrganizationResponse>()
 
   return result

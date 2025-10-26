@@ -42,12 +42,13 @@ export function ProjectSwitcher() {
         {isLoading ? (
           <>
             <Skeleton className="size-4 rounded-full" />
-            <Skeleton className="h-4 w-full flex-1" />
+            <Skeleton className="h-4 w-[111px]" />
           </>
         ) : (
           <>
             {currentProject ? (
               <>
+                {' '}
                 <Avatar className="size-4">
                   {currentProject.avatarUrl && (
                     <AvatarImage src={currentProject.avatarUrl} />
@@ -82,7 +83,10 @@ export function ProjectSwitcher() {
             data.projects.map((project) => {
               return (
                 <DropdownMenuItem key={project.id} asChild>
-                  <Link href={`/org/${orgSlug}/project/${project.slug}`}>
+                  <Link
+                    href={`/org/${orgSlug}/project/${project.slug}`}
+                    className="cursor-pointer"
+                  >
                     <Avatar className="mr-2 size-4">
                       {project.avatarUrl && (
                         <AvatarImage src={project.avatarUrl} />
@@ -97,7 +101,10 @@ export function ProjectSwitcher() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={`/org/${orgSlug}/create-project`}>
+          <Link
+            href={`/org/${orgSlug}/create-project`}
+            className="cursor-pointer"
+          >
             <PlusCircle className="mr-2 size-4" />
             Create new
           </Link>

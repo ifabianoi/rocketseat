@@ -5,6 +5,7 @@ import { AlertTriangle, Loader2, UserPlus } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -32,8 +33,21 @@ export function CreateInviteForm() {
         </Alert>
       )}
 
+      {success === true && message && (
+        <Alert variant="success">
+          <AlertTriangle className="size-4" />
+          <AlertTitle>Success!</AlertTitle>
+          <AlertDescription>
+            <p>{message}</p>
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="flex items-center gap-2">
-        <div className="flex-1 space-y-1">
+        <div className="flex-1">
+          <Label htmlFor="email" className="sr-only">
+            Insira um e-mail válido
+          </Label>
           <Input
             name="email"
             id="email"
@@ -53,9 +67,15 @@ export function CreateInviteForm() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ADMIN">Admin</SelectItem>
-            <SelectItem value="MEMBER">Member</SelectItem>
-            <SelectItem value="BILLING">Billing</SelectItem>
+            <SelectItem className="cursor-pointer" value="ADMIN">
+              Admin
+            </SelectItem>
+            <SelectItem className="cursor-pointer" value="MEMBER">
+              Member
+            </SelectItem>
+            <SelectItem className="cursor-pointer" value="BILLING">
+              Billing
+            </SelectItem>
           </SelectContent>
         </Select>
 
@@ -64,7 +84,7 @@ export function CreateInviteForm() {
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <>
-              <UserPlus className="mr-2 size-4" />
+              <UserPlus />
               Invite user
             </>
           )}

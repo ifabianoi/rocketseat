@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { CheckCircle, LogIn, LogOut } from 'lucide-react'
+import { CheckCircle, LayoutDashboard, LogIn, LogOut } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -12,19 +12,19 @@ import { Separator } from '@/components/ui/separator'
 import { acceptInvite } from '@/http/accept-invite'
 import { getInvite } from '@/http/get-invite'
 
-dayjs.extend(relativeTime)
-
-interface InvitePageProps {
-  params: {
+interface InviteProps {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function InvitePage({ params }: InvitePageProps) {
-  const inviteId = params.id
+dayjs.extend(relativeTime)
 
-  const { invite } = await getInvite(inviteId)
-  const isUserAuthenticated = isAuthenticated()
+export default async function Invite({ params }: InviteProps) {
+  const { id } = await params
+
+  const { invite } = await getInvite({ inviteId: id })
+  const isUserAuthenticated = Boolean(await isAuthenticated())
 
   let currentUserEmail = null
 
@@ -40,7 +40,8 @@ export default async function InvitePage({ params }: InvitePageProps) {
   async function signInFromInvite() {
     'use server'
 
-    cookies().set('inviteId', inviteId)
+    const cookieStore = await cookies()
+    cookieStore.set('inviteId', id)
 
     redirect(`/auth/sign-in?email=${invite.email}`)
   }
@@ -48,7 +49,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
   async function acceptInviteAction() {
     'use server'
 
-    await acceptInvite(inviteId)
+    await acceptInvite({ inviteId: id })
 
     redirect('/')
   }
@@ -99,7 +100,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
 
         {isUserAuthenticated && !userIsAuthenticatedWithSameEmailFromInvite && (
           <div className="space-y-4">
-            <p className="text-balance text-center text-sm leading-relaxed text-muted-foreground">
+            <p className="text-balance text-center leading-relaxed text-muted-foreground">
               This invite was sent to{' '}
               <span className="font-medium text-foreground">
                 {invite.email}
@@ -108,19 +109,21 @@ export default async function InvitePage({ params }: InvitePageProps) {
               <span className="font-medium text-foreground">
                 {currentUserEmail}
               </span>
-              .
             </p>
 
             <div className="space-y-2">
               <Button className="w-full" variant="secondary" asChild>
-                <a href="/api/auth/sign-out">
+                <a href="/api/auth/sign-out" className="cursor-pointer">
                   <LogOut className="mr-2 size-4" />
                   Sign out from {currentUserEmail}
                 </a>
               </Button>
 
               <Button className="w-full" variant="outline" asChild>
-                <Link href="/">Back to dashboard</Link>
+                <Link href="/" className="cursor-pointer">
+                  <LayoutDashboard className="mr-2 size-4" />
+                  Back to dashboard
+                </Link>
               </Button>
             </div>
           </div>

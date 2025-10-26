@@ -3,8 +3,8 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
-import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
+import { BadRequestError } from '../_errors/bad-request-error'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
 
@@ -21,7 +21,7 @@ export async function getProject(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           params: z.object({
             orgSlug: z.string(),
-            projectSlug: z.string().uuid(),
+            projectSlug: z.string(),
           }),
           response: {
             200: z.object({
@@ -36,7 +36,7 @@ export async function getProject(app: FastifyInstance) {
                 owner: z.object({
                   id: z.string().uuid(),
                   name: z.string().nullable(),
-                  avatarUrl: z.string().url().nullable(),
+                  avatarUrl: z.string().nullable(),
                 }),
               }),
             }),
@@ -49,7 +49,7 @@ export async function getProject(app: FastifyInstance) {
         const { organization, membership } =
           await request.getUserMembership(orgSlug)
 
-        const { cannot } = getUserPermissions(userId, membership.role)
+          const { cannot } = getUserPermissions(userId, membership.role)
 
         if (cannot('get', 'Project')) {
           throw new UnauthorizedError(
@@ -70,7 +70,6 @@ export async function getProject(app: FastifyInstance) {
               select: {
                 id: true,
                 name: true,
-                email: true,
                 avatarUrl: true,
               },
             },

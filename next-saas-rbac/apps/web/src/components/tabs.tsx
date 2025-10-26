@@ -4,7 +4,7 @@ import { NavLink } from './nav-link'
 import { Button } from './ui/button'
 
 export async function Tabs() {
-  const currentOrg = getCurrentOrg()
+  const currentOrg = await getCurrentOrg()
 
   const permissions = await ability()
 
@@ -41,7 +41,7 @@ export async function Tabs() {
 
         {(canUpdateOrganization || canGetBilling) && (
           <Button
-            asChild
+            asChild 
             variant="ghost"
             size="sm"
             className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"

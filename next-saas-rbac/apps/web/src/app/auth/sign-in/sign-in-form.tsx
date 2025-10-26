@@ -3,7 +3,7 @@
 import { AlertTriangle, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -17,14 +17,10 @@ import { signInWithGithub } from '../actions'
 import { signInWithEmailAndPassword } from './actions'
 
 export function SignInForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
 
   const [{ errors, message, success }, handleSubmit, isPending] = useFormState(
     signInWithEmailAndPassword,
-    () => {
-      router.push('/')
-    },
   )
 
   return (
@@ -90,7 +86,7 @@ export function SignInForm() {
       <Separator />
 
       <form action={signInWithGithub}>
-        <Button type="submit" className="w-full" variant="outline">
+      <Button type="submit" className="w-full" variant="outline">
           <Image src={githubIcon} alt="" className="mr-2 size-4 dark:invert" />
           Sign in with GitHub
         </Button>
