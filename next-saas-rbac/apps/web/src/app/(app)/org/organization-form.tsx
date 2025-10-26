@@ -98,7 +98,7 @@ export function OrganizationForm({
 
             <p className="text-sm text-muted-foreground">
               This will automatically invite all members with same e-mail domain
-              to this organization.{' '}
+              to this organization.
             </p>
           </label>
         </div>
