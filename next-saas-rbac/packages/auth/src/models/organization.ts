@@ -1,9 +1,9 @@
-import { z } from 'zod'
+import * as zod from 'zod'
 
-export const organizationSchema = z.object({
-  __typename: z.literal('Organization').default('Organization'),
-  id: z.string(),
-  ownerId: z.string(),
+export const organizationSchema = zod.object({
+  __typename: zod.literal('Organization').default('Organization'),
+  id: zod.string(),
+  ownerId: zod.string(),
 })
 
-export type Organization = z.infer<typeof organizationSchema>
+export type Organization = zod.infer<typeof organizationSchema>

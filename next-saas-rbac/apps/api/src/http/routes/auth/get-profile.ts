@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -19,12 +19,12 @@ export async function getProfile(app: FastifyInstance) {
           summary: 'Get authenticated user profile',
           security: [{ bearerAuth: [] }],
           response: {
-            200: z.object({
-              user: z.object({
-                id: z.string().uuid(),
-                name: z.string().nullable(),
-                email: z.string().email(),
-                avatarUrl: z.string().url().nullable(),
+            200: zod.object({
+              user: zod.object({
+                id: zod.string().uuid(),
+                name: zod.string().nullable(),
+                email: zod.string().email(),
+                avatarUrl: zod.string().url().nullable(),
               }),
             }),
           },

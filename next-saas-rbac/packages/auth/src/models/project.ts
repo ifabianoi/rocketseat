@@ -1,9 +1,9 @@
-import { z } from 'zod'
+import * as zod from 'zod'
 
-export const projectSchema = z.object({
-  __typename: z.literal('Project').default('Project'),
-  id: z.string(),
-  ownerId: z.string(),
+export const projectSchema = zod.object({
+  __typename: zod.literal('Project').default('Project'),
+  id: zod.string(),
+  ownerId: zod.string(),
 })
 
-export type Project = z.infer<typeof projectSchema>
+export type Project = zod.infer<typeof projectSchema>

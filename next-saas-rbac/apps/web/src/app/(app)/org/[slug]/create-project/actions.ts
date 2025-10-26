@@ -1,16 +1,16 @@
 'use server'
 
 import { HTTPError } from 'ky'
-import { z } from 'zod'
+import * as zod from 'zod'
 
 import { getCurrentOrg } from '@/auth/auth'
 import { createProject } from '@/http/create-project'
 
-const ProjectSchema = z.object({
-  name: z
+const ProjectSchema = zod.object({
+  name: zod
     .string()
     .min(4, { message: 'Please, include at least 4 characters.' }),
-  description: z.string(),
+  description: zod.string(),
 })
 
 export async function createProjectAction(data: FormData) {
@@ -28,13 +28,13 @@ export async function createProjectAction(data: FormData) {
 
   try {
     await createProject({
-      org: orgSlug!,
       name,
       description,
+      org: orgSlug!,
     })
-  } catch (err) {
-    if (err instanceof HTTPError) {
-      const { message } = await err.response.json()
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const { message } = await error.response.json()
 
       return { success: false, message, errors: null }
     }

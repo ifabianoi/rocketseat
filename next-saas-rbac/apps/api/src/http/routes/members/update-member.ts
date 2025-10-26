@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,22 +20,23 @@ export async function updateMember(app: FastifyInstance) {
           tags: ['members'],
           summary: 'Update a member',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-            memberId: z.string().uuid(),
-          }),
-          body: z.object({
+          body: zod.object({
             role: roleSchema,
           }),
+          params: zod.object({
+            slug: zod.string(),
+            memberId: zod.string().uuid(),
+          }),
           response: {
-            204: z.null(),
+            204: zod.null(),
           },
         },
       },
       async (request, reply) => {
         const { slug, memberId } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,19 +20,20 @@ export async function revokeInvite(app: FastifyInstance) {
           tags: ['invites'],
           summary: 'Revoke an invite',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-            inviteId: z.string().uuid(),
+          params: zod.object({
+            slug: zod.string(),
+            inviteId: zod.string().uuid(),
           }),
           response: {
-            204: z.null(),
+            204: zod.null(),
           },
         },
       },
       async (request, reply) => {
         const { slug, inviteId } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)

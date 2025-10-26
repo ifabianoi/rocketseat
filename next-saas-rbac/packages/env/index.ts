@@ -1,16 +1,14 @@
 import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod'
+import * as zod from 'zod'
 
 export const env = createEnv({
   server: {
-    PORT: z.coerce.number().default(3333),
-    DATABASE_URL: z.string().url(),
-
-    JWT_SECRET: z.string(),
-    
-    GITHUB_OAUTH_CLIENT_ID: z.string(),
-    GITHUB_OAUTH_CLIENT_SECRET: z.string(),
-    GITHUB_OAUTH_CLIENT_REDIRECT_URI: z.string().url(),
+    PORT: zod.coerce.number().default(3333),
+    JWT_SECRET: zod.string(),
+    DATABASE_URL: zod.string().url(),
+    GITHUB_OAUTH_CLIENT_ID: zod.string(),
+    GITHUB_OAUTH_CLIENT_SECRET: zod.string(),
+    GITHUB_OAUTH_CLIENT_REDIRECT_URI: zod.string().url(),
   },
   client: {},
   shared: {},

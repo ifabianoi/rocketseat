@@ -1,13 +1,14 @@
 import { projectSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { BadRequestError } from '../_errors/bad-request-error'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function updateProject(app: FastifyInstance) {
   app
@@ -20,23 +21,24 @@ export async function updateProject(app: FastifyInstance) {
           tags: ['projects'],
           summary: 'Update a project',
           security: [{ bearerAuth: [] }],
-          body: z.object({
-            name: z.string(),
-            description: z.string(),
+          body: zod.object({
+            name: zod.string(),
+            description: zod.string(),
           }),
-          params: z.object({
-            slug: z.string(),
-            projectId: z.string().uuid(),
+          params: zod.object({
+            slug: zod.string(),
+            projectId: zod.string().uuid(),
           }),
           response: {
-            204: z.null(),
+            204: zod.null(),
           },
         },
       },
       async (request, reply) => {
         const { slug, projectId } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const project = await prisma.project.findUnique({

@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -14,10 +14,10 @@ export async function createAccount(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Create a new account',
-        body: z.object({
-          name: z.string(),
-          email: z.string().email(),
-          password: z.string().min(6),
+        body: zod.object({
+          name: zod.string(),
+          email: zod.string().email(),
+          password: zod.string().min(6),
         }),
       },
     },

@@ -17,8 +17,8 @@ export default async function Settings() {
   const permissions = await ability()
 
   const canUpdateOrganization = permissions?.can('update', 'Organization')
-  const canGetBilling = permissions?.can('get', 'Billing')
   const canShutdownOrganization = permissions?.can('delete', 'Organization')
+  const canGetBilling = permissions?.can('get', 'Billing')
 
   const { organization } = await getOrganization({ org: currentOrg! })
 
@@ -35,6 +35,7 @@ export default async function Settings() {
                 Update your organization details
               </CardDescription>
             </CardHeader>
+
             <CardContent>
               <OrganizationForm
                 isUpdating
@@ -60,6 +61,7 @@ export default async function Settings() {
                 You cannot undo this action.
               </CardDescription>
             </CardHeader>
+
             <CardContent>
               <ShutdownOrganizationButton />
             </CardContent>

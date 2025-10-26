@@ -1,18 +1,18 @@
 'use server'
 
 import { HTTPError } from 'ky'
-import { z } from 'zod'
+import * as zod from 'zod'
 
 import { getCurrentOrg } from '@/auth/auth'
 import { createOrganization } from '@/http/create-organization'
 import { updateOrganization } from '@/http/update-organization'
 
-const organizationSchema = z
+const organizationSchema = zod
   .object({
-    name: z
+    name: zod
       .string()
       .min(4, { message: 'Please, include at least 4 characters.' }),
-    domain: z
+    domain: zod
       .string()
       .nullable()
       .refine(
@@ -24,12 +24,10 @@ const organizationSchema = z
           }
           return true
         },
-        {
-          message: 'Please, enter a valid domain.',
-        },
+        { message: 'Please, enter a valid domain.' },
       ),
-    shouldAttachUsersByDomain: z
-      .union([z.literal('on'), z.literal('off'), z.boolean()])
+    shouldAttachUsersByDomain: zod
+      .union([zod.literal('on'), zod.literal('off'), zod.boolean()])
       .transform((value) => value === true || value === 'on')
       .default(false),
   })
@@ -47,7 +45,7 @@ const organizationSchema = z
     },
   )
 
-export type OrganizationSchema = z.infer<typeof organizationSchema>
+export type OrganizationSchema = zod.infer<typeof organizationSchema>
 
 export async function createOrganizationAction(data: FormData) {
   const result = organizationSchema.safeParse(Object.fromEntries(data))
@@ -66,9 +64,9 @@ export async function createOrganizationAction(data: FormData) {
       domain,
       shouldAttachUsersByDomain,
     })
-  } catch (err) {
-    if (err instanceof HTTPError) {
-      const { message } = await err.response.json()
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const { message } = await error.response.json()
 
       return { success: false, message, errors: null }
     }
@@ -106,10 +104,9 @@ export async function updateOrganizationAction(data: FormData) {
       domain,
       shouldAttachUsersByDomain,
     })
-
-  } catch (err) {
-    if (err instanceof HTTPError) {
-      const { message } = await err.response.json()
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const { message } = await error.response.json()
 
       return { success: false, message, errors: null }
     }

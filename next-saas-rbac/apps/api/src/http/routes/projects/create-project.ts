@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,24 +20,25 @@ export async function createProject(app: FastifyInstance) {
           tags: ['projects'],
           summary: 'Create a new project',
           security: [{ bearerAuth: [] }],
-          body: z.object({
-            name: z.string(),
-            description: z.string(),
+          body: zod.object({
+            name: zod.string(),
+            description: zod.string(),
           }),
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            201: z.object({
-              projectId: z.string().uuid(),
+            201: zod.object({
+              projectId: zod.string().uuid(),
             }),
           },
         },
       },
       async (request, reply) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)
@@ -53,10 +54,10 @@ export async function createProject(app: FastifyInstance) {
         const project = await prisma.project.create({
           data: {
             name,
-            slug: createSlug(name),
             description,
-            organizationId: organization.id,
+            slug: createSlug(name),
             ownerId: userId,
+            organizationId: organization.id,
           },
         })
 

@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -14,12 +14,12 @@ export async function resetPassword(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Create new password',
-        body: z.object({
-          code: z.string(),
-          password: z.string().min(6),
+        body: zod.object({
+          code: zod.string(),
+          password: zod.string().min(6),
         }),
         // response: {
-        //   201: z.null(),
+        //   201: zod.null(),
         // },
       },
     },

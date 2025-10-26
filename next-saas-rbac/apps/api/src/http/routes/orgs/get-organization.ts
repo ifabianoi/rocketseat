@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 
@@ -15,21 +15,19 @@ export async function getOrganization(app: FastifyInstance) {
           tags: ['organizations'],
           summary: 'Get details from organization',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-          }),
+          params: zod.object({ slug: zod.string() }),
           response: {
-            200: z.object({
-              organization: z.object({
-                id: z.string().uuid(),
-                name: z.string(),
-                slug: z.string(),
-                domain: z.string().nullable(),
-                shouldAttachUsersByDomain: z.boolean(),
-                avatarUrl: z.string().url().nullable(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
-                ownerId: z.string().uuid(),
+            200: zod.object({
+              organization: zod.object({
+                id: zod.string().uuid(),
+                name: zod.string(),
+                slug: zod.string(),
+                domain: zod.string().nullable(),
+                shouldAttachUsersByDomain: zod.boolean(),
+                avatarUrl: zod.string().url().nullable(),
+                createdAt: zod.date(),
+                updatedAt: zod.date(),
+                ownerId: zod.string().uuid(),
               }),
             }),
           },
@@ -37,10 +35,11 @@ export async function getOrganization(app: FastifyInstance) {
       },
       async (request) => {
         const { slug } = request.params
-
         const { organization } = await request.getUserMembership(slug)
 
-        return { organization }
+        return {
+          organization,
+        }
       },
     )
 }

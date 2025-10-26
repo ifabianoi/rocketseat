@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -21,24 +21,25 @@ export async function createInvite(app: FastifyInstance) {
           tags: ['invites'],
           summary: 'Create a new invite',
           security: [{ bearerAuth: [] }],
-          body: z.object({
-            email: z.string().email(),
+          body: zod.object({
+            email: zod.string().email(),
             role: roleSchema,
           }),
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            201: z.object({
-              inviteId: z.string().uuid(),
+            201: zod.object({
+              inviteId: zod.string().uuid(),
             }),
           },
         },
       },
       async (request, reply) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)
@@ -55,10 +56,10 @@ export async function createInvite(app: FastifyInstance) {
 
         if (
           organization.shouldAttachUsersByDomain &&
-          domain === organization.domain
+          organization.domain === domain
         ) {
           throw new BadRequestError(
-            `Users with '${domain}' domain will join your organization automatically on login.`,
+            `Users with "${domain}" domain will join your organization automatically on login.`,
           )
         }
 
@@ -88,7 +89,7 @@ export async function createInvite(app: FastifyInstance) {
 
         if (memberWithSameEmail) {
           throw new BadRequestError(
-            'A member with this e-mail already belongs to your organization.',
+            'A member with this e-mail already belongs to your organization',
           )
         }
 

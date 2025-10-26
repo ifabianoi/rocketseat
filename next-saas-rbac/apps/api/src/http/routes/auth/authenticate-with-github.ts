@@ -1,7 +1,7 @@
 import { env } from '@saas/env'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -14,12 +14,12 @@ export async function authenticateWithGithub(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Authenticate with Github',
-        body: z.object({
-          code: z.string(),
+        body: zod.object({
+          code: zod.string(),
         }),
         response: {
-          201: z.object({
-            token: z.string(),
+          201: zod.object({
+            token: zod.string(),
           }),
         },
       },
@@ -51,11 +51,11 @@ export async function authenticateWithGithub(app: FastifyInstance) {
 
       const githubAccessTokenData = await githubAccessTokenResponse.json()
 
-      const { access_token: githubAccessToken } = z
+      const { access_token: githubAccessToken } = zod
         .object({
-          access_token: z.string(),
-          token_type: z.literal('bearer'),
-          scope: z.string(),
+          access_token: zod.string(),
+          token_type: zod.literal('bearer'),
+          scope: zod.string(),
         })
         .parse(githubAccessTokenData)
 
@@ -72,12 +72,12 @@ export async function authenticateWithGithub(app: FastifyInstance) {
         name,
         email,
         avatar_url: avatarUrl,
-      } = z
+      } = zod
         .object({
-          id: z.number().int().transform(String),
-          avatar_url: z.string().url(),
-          name: z.string().nullable(),
-          email: z.string().nullable(),
+          id: zod.number().int().transform(String),
+          avatar_url: zod.string().url(),
+          name: zod.string().nullable(),
+          email: zod.string().nullable(),
         })
         .parse(githubUserData)
 

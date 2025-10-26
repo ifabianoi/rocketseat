@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -19,21 +19,21 @@ export async function getOrganizationBilling(app: FastifyInstance) {
           tags: ['billing'],
           summary: 'Get billing information from organization',
           security: [{ bearerAuth: [] }],
-          params: z.object({ slug: z.string() }),
+          params: zod.object({ slug: zod.string() }),
           response: {
-            200: z.object({
-              billing: z.object({
-                seats: z.object({
-                  amount: z.number(),
-                  unit: z.number(),
-                  price: z.number(),
+            200: zod.object({
+              billing: zod.object({
+                seats: zod.object({
+                  amount: zod.number(),
+                  unit: zod.number(),
+                  price: zod.number(),
                 }),
-                projects: z.object({
-                  amount: z.number(),
-                  unit: z.number(),
-                  price: z.number(),
+                projects: zod.object({
+                  amount: zod.number(),
+                  unit: zod.number(),
+                  price: zod.number(),
                 }),
-                total: z.number(),
+                total: zod.number(),
               }),
             }),
           },
@@ -49,7 +49,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
 
         if (cannot('get', 'Billing')) {
           throw new UnauthorizedError(
-            `You're not allowed to get billing details from this organization.`,
+            `You're not allowed to get billing details from this organization`,
           )
         }
 
@@ -60,6 +60,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
               role: { not: 'BILLING' },
             },
           }),
+
           prisma.project.count({
             where: {
               organizationId: organization.id,

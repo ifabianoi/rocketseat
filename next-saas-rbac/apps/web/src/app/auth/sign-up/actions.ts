@@ -2,22 +2,22 @@
 
 import { HTTPError } from 'ky'
 import { redirect } from 'next/navigation'
-import { z } from 'zod'
+import * as zod from 'zod'
 
 import { signUp } from '@/http/sign-up'
 
-const signUpSchema = z
+const signUpSchema = zod
   .object({
-    name: z.string().refine((value) => value.split(' ').length > 1, {
-      message: 'Please, enter your full name',
+    name: zod.string().refine((value) => value.split(' ').length > 1, {
+      message: 'Please, enter your full name.',
     }),
-    email: z
+    email: zod
       .string()
       .email({ message: 'Please, provide a valid e-mail address.' }),
-    password: z
+    password: zod
       .string()
       .min(6, { message: 'Password should have at least 6 characters.' }),
-    password_confirmation: z.string(),
+    password_confirmation: zod.string(),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: 'Password confirmation does not match.',
@@ -41,9 +41,9 @@ export async function signUpAction(data: FormData) {
       email,
       password,
     })
-  } catch (err) {
-    if (err instanceof HTTPError) {
-      const { message } = await err.response.json()
+  } catch (error) {
+    if (error instanceof HTTPError) {
+      const { message } = await error.response.json()
 
       return { success: false, message, errors: null }
     }

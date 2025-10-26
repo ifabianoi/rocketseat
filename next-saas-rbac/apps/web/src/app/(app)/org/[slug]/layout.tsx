@@ -5,8 +5,7 @@ import { Tabs } from '@/components/tabs'
 
 export default async function OrgLayout({
   children,
-}: Readonly<{
-  children: ReactNode }>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
     <div>
       <div className="pt-6">

@@ -3,16 +3,16 @@
 import { HTTPError } from 'ky'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { z } from 'zod'
+import * as zod from 'zod'
 
 import { acceptInvite } from '@/http/accept-invite'
 import { signInWithEmail } from '@/http/sign-in-with-email'
 
-const signInSchema = z.object({
-  email: z
+const signInSchema = zod.object({
+  email: zod
     .string()
     .email({ message: 'Please, provide a valid e-mail address.' }),
-  password: z.string().min(1, { message: 'Please, provide your password.' }),
+  password: zod.string().min(1, { message: 'Please, provide your password.' }),
 })
 
 export async function signInWithEmailAndPassword(data: FormData) {

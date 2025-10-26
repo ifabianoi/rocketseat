@@ -1,7 +1,7 @@
 import { organizationSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -21,19 +21,20 @@ export async function transferOrganization(app: FastifyInstance) {
           tags: ['organizations'],
           summary: 'Transfer organization ownership',
           security: [{ bearerAuth: [] }],
-          body: z.object({
-            transferToUserId: z.string().uuid(),
+          body: zod.object({
+            transferToUserId: zod.string().uuid(),
           }),
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            204: z.null(),
+            204: zod.null(),
           },
         },
       },
       async (request, reply) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
         const { membership, organization } =
           await request.getUserMembership(slug)
@@ -50,7 +51,7 @@ export async function transferOrganization(app: FastifyInstance) {
 
         const { transferToUserId } = request.body
 
-        const transferMembership = await prisma.member.findUnique({
+        const transferToMembership = await prisma.member.findUnique({
           where: {
             organizationId_userId: {
               organizationId: organization.id,
@@ -59,7 +60,7 @@ export async function transferOrganization(app: FastifyInstance) {
           },
         })
 
-        if (!transferMembership) {
+        if (!transferToMembership) {
           throw new BadRequestError(
             'Target user is not a member of this organization.',
           )

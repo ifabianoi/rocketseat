@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,21 +20,21 @@ export async function getInvites(app: FastifyInstance) {
           tags: ['invites'],
           summary: 'Get all organization invites',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            200: z.object({
-              invites: z.array(
-                z.object({
-                  id: z.string().uuid(),
+            200: zod.object({
+              invites: zod.array(
+                zod.object({
+                  id: zod.string().uuid(),
+                  email: zod.string().email(),
                   role: roleSchema,
-                  email: z.string().email(),
-                  createdAt: z.date(),
-                  author: z
+                  createdAt: zod.date(),
+                  author: zod
                     .object({
-                      id: z.string().uuid(),
-                      name: z.string().nullable(),
+                      id: zod.string().uuid(),
+                      name: zod.string().nullable(),
                     })
                     .nullable(),
                 }),
@@ -45,8 +45,9 @@ export async function getInvites(app: FastifyInstance) {
       },
       async (request) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)

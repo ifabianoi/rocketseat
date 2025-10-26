@@ -1,11 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getProjects(app: FastifyInstance) {
   app
@@ -18,25 +19,25 @@ export async function getProjects(app: FastifyInstance) {
           tags: ['projects'],
           summary: 'Get all organization projects',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            200: z.object({
-              projects: z.array(
-                z.object({
-                  id: z.string().uuid(),
-                  description: z.string(),
-                  name: z.string(),
-                  slug: z.string(),
-                  avatarUrl: z.string().url().nullable(),
-                  organizationId: z.string().uuid(),
-                  ownerId: z.string().uuid(),
-                  createdAt: z.date(),
-                  owner: z.object({
-                    id: z.string().uuid(),
-                    name: z.string().nullable(),
-                    avatarUrl: z.string().url().nullable(),
+            200: zod.object({
+              projects: zod.array(
+                zod.object({
+                  id: zod.string().uuid(),
+                  name: zod.string(),
+                  description: zod.string(),
+                  slug: zod.string(),
+                  avatarUrl: zod.string().url().nullable(),
+                  ownerId: zod.string().uuid(),
+                  organizationId: zod.string().uuid(),
+                  createdAt: zod.date(),
+                  owner: zod.object({
+                    id: zod.string().uuid(),
+                    name: zod.string().nullable(),
+                    avatarUrl: zod.string().url().nullable(),
                   }),
                 }),
               ),
@@ -46,15 +47,16 @@ export async function getProjects(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)
 
         if (cannot('get', 'Project')) {
           throw new UnauthorizedError(
-            `You're not allowed to see organization projects.`,
+            `You're not allowed to see projects from this organization.`,
           )
         }
 

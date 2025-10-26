@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 
@@ -16,16 +16,14 @@ export async function getMembership(app: FastifyInstance) {
           tags: ['organizations'],
           summary: 'Get user membership on organization',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-          }),
+          params: zod.object({ slug: zod.string() }),
           response: {
-            200: z.object({
-              membership: z.object({
-                id: z.string().uuid(),
+            200: zod.object({
+              membership: zod.object({
+                id: zod.string().uuid(),
                 role: roleSchema,
-                userId: z.string().uuid(),
-                organizationId: z.string().uuid(),
+                userId: zod.string().uuid(),
+                organizationId: zod.string().uuid(),
               }),
             }),
           },

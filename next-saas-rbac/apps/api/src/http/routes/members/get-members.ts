@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,19 +20,19 @@ export async function getMembers(app: FastifyInstance) {
           tags: ['members'],
           summary: 'Get all organization members',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
+          params: zod.object({
+            slug: zod.string(),
           }),
           response: {
-            200: z.object({
-              members: z.array(
-                z.object({
-                  id: z.string().uuid(),
-                  userId: z.string().uuid(),
+            200: zod.object({
+              members: zod.array(
+                zod.object({
+                  id: zod.string().uuid(),
+                  userId: zod.string().uuid(),
                   role: roleSchema,
-                  name: z.string().nullable(),
-                  email: z.string().email(),
-                  avatarUrl: z.string().url().nullable(),
+                  name: zod.string().nullable(),
+                  email: zod.string().email(),
+                  avatarUrl: zod.string().url().nullable(),
                 }),
               ),
             }),
@@ -41,8 +41,9 @@ export async function getMembers(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { slug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(slug)
 
         const { cannot } = getUserPermissions(userId, membership.role)
@@ -77,9 +78,9 @@ export async function getMembers(app: FastifyInstance) {
         const membersWithRoles = members.map(
           ({ user: { id: userId, ...user }, ...member }) => {
             return {
+              userId,
               ...user,
               ...member,
-              userId,
             }
           },
         )

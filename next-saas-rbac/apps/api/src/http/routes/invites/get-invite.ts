@@ -1,7 +1,7 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -14,26 +14,26 @@ export async function getInvite(app: FastifyInstance) {
       schema: {
         tags: ['invites'],
         summary: 'Get an invite',
-        params: z.object({
-          inviteId: z.string().uuid(),
+        params: zod.object({
+          inviteId: zod.string().uuid(),
         }),
         response: {
-          200: z.object({
-            invite: z.object({
-              id: z.string().uuid(),
+          200: zod.object({
+            invite: zod.object({
+              id: zod.string().uuid(),
+              email: zod.string().email(),
               role: roleSchema,
-              email: z.string().email(),
-              createdAt: z.date(),
-              organization: z.object({
-                name: z.string(),
-              }),
-              author: z
+              createdAt: zod.date(),
+              author: zod
                 .object({
-                  id: z.string().uuid(),
-                  name: z.string().nullable(),
-                  avatarUrl: z.string().url().nullable(),
+                  id: zod.string().uuid(),
+                  name: zod.string().nullable(),
+                  avatarUrl: zod.string().url().nullable(),
                 })
                 .nullable(),
+              organization: zod.object({
+                name: zod.string(),
+              }),
             }),
           }),
         },
@@ -43,9 +43,6 @@ export async function getInvite(app: FastifyInstance) {
       const { inviteId } = request.params
 
       const invite = await prisma.invite.findUnique({
-        where: {
-          id: inviteId,
-        },
         select: {
           id: true,
           email: true,
@@ -64,10 +61,13 @@ export async function getInvite(app: FastifyInstance) {
             },
           },
         },
+        where: {
+          id: inviteId,
+        },
       })
 
       if (!invite) {
-        throw new BadRequestError('Invite not found')
+        throw new BadRequestError('Invite not found.')
       }
 
       return { invite }

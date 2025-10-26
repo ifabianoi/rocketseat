@@ -1,14 +1,15 @@
-import { z } from 'zod'
+import * as zod from 'zod'
+
 import { organizationSchema } from '../models/organization'
 
-export const organizationSubject = z.tuple([
-  z.union([
-    z.literal('manage'),
-    z.literal('update'),
-    z.literal('delete'),
-    z.literal('transfer_ownership'),
+export const organizationSubject = zod.tuple([
+  zod.union([
+    zod.literal('manage'),
+    zod.literal('update'),
+    zod.literal('delete'),
+    zod.literal('transfer_ownership'),
   ]),
-  z.union([z.literal('Organization'), organizationSchema])
+  zod.union([zod.literal('Organization'), organizationSchema]),
 ])
 
-export type OrganizationSubject = z.infer<typeof organizationSubject>
+export type OrganizationSubject = zod.infer<typeof organizationSubject>

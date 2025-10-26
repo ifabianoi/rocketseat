@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -11,11 +11,11 @@ export async function requestPasswordRecover(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Send a request to recover the password',
-        body: z.object({
-          email: z.string().email(),
+        body: zod.object({
+          email: zod.string().email(),
         }),
         response: {
-          201: z.null(),
+          201: zod.null(),
         },
       },
     },

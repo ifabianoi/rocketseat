@@ -19,7 +19,7 @@ import { signInWithEmailAndPassword } from './actions'
 export function SignInForm() {
   const searchParams = useSearchParams()
 
-  const [{ errors, message, success }, handleSubmit, isPending] = useFormState(
+  const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signInWithEmailAndPassword,
   )
 
@@ -70,7 +70,7 @@ export function SignInForm() {
           </Link>
         </div>
 
-        <Button className="w-full" type="submit" disabled={isPending}>
+        <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
@@ -78,7 +78,7 @@ export function SignInForm() {
           )}
         </Button>
 
-        <Button className="w-full" variant="link" size="sm" asChild>
+        <Button variant="link" size="sm" asChild className="w-full">
           <Link href="/auth/sign-up">Create new account</Link>
         </Button>
       </form>
@@ -86,9 +86,9 @@ export function SignInForm() {
       <Separator />
 
       <form action={signInWithGithub}>
-      <Button type="submit" className="w-full" variant="outline">
-          <Image src={githubIcon} alt="" className="mr-2 size-4 dark:invert" />
-          Sign in with GitHub
+        <Button type="submit" variant="outline" className="w-full">
+          <Image src={githubIcon} alt="" className="mr-2 size-4" />
+          Sign in with Github
         </Button>
       </form>
     </div>

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import * as zod from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
@@ -20,24 +20,24 @@ export async function getProject(app: FastifyInstance) {
           tags: ['projects'],
           summary: 'Get project details',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            orgSlug: z.string(),
-            projectSlug: z.string(),
+          params: zod.object({
+            orgSlug: zod.string(),
+            projectSlug: zod.string(),
           }),
           response: {
-            200: z.object({
-              project: z.object({
-                id: z.string().uuid(),
-                description: z.string(),
-                name: z.string(),
-                slug: z.string(),
-                avatarUrl: z.string().url().nullable(),
-                organizationId: z.string().uuid(),
-                ownerId: z.string().uuid(),
-                owner: z.object({
-                  id: z.string().uuid(),
-                  name: z.string().nullable(),
-                  avatarUrl: z.string().nullable(),
+            200: zod.object({
+              project: zod.object({
+                id: zod.string().uuid(),
+                name: zod.string(),
+                description: zod.string(),
+                slug: zod.string(),
+                avatarUrl: zod.string().url().nullable(),
+                ownerId: zod.string().uuid(),
+                organizationId: zod.string().uuid(),
+                owner: zod.object({
+                  id: zod.string().uuid(),
+                  name: zod.string().nullable(),
+                  avatarUrl: zod.string().nullable(),
                 }),
               }),
             }),
@@ -46,8 +46,9 @@ export async function getProject(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { orgSlug, projectSlug } = request.params
+
         const userId = await request.getCurrentUserId()
-        const { organization, membership } =
+        const { membership, organization } =
           await request.getUserMembership(orgSlug)
 
         const project = await prisma.project.findUnique({

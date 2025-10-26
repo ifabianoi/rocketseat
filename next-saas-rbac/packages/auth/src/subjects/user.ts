@@ -1,13 +1,13 @@
-import { z } from 'zod'
+import * as zod from 'zod'
 
-export const userSubject = z.tuple([
-  z.union([
-    z.literal('manage'),
-    z.literal('get'),
-    z.literal('update'),
-    z.literal('delete')
+export const userSubject = zod.tuple([
+  zod.union([
+    zod.literal('manage'),
+    zod.literal('get'),
+    zod.literal('update'),
+    zod.literal('delete'),
   ]),
-  z.literal('User'),
+  zod.literal('User'),
 ])
 
-export type UserSubject = z.infer<typeof userSubject>
+export type UserSubject = zod.infer<typeof userSubject>
