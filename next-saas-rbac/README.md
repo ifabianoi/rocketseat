@@ -1,6 +1,56 @@
-# Next.js SaaS + RBAC
+# SaaS - Next.js and Fastify + RBAC
 
-This project contains all the necessary boilerplate to setup a multi-tenant SaaS with Next.js including authentication and RBAC authorization.
+Project developed as part of the [Rocketseat](https://app.rocketseat.com.br/journey/saa-s-next-js-rbac/contents) course.  
+This **monorepo** uses **Turborepo** and provides a complete foundation for building a **multi-tenant SaaS** application with **Next.js** and **Fastify**, featuring authentication and role-based access control (**RBAC**).
+
+## 🌐 Production application:
+
+Frontend: https://saas-rbac-rocket.vercel.app/
+
+Backend/Swagger UI: https://next-saas-rbac-eu5k.onrender.com/docs
+
+---
+
+## 🚀 Tech Stack
+
+| Category              | Technologies                                                                                                                                                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tools**             | Turborepo • PNPM • Docker • Warp Terminal                                                                                                                       |
+| **API / Backend**     | Node.js • Fastify • TypeScript • Zod • Prisma Client • PostgreSQL • Swagger • Nodemailer (Gmail) • AWS SDK • Cloudflare R2 • OAuth (GitHub, Google)             |
+| **Frontend**          | React 19 RC • Next.js 15 (App Router) • React Query • KY HTTP • TypeScript • Zod • TailwindCSS • Radix UI • shadcn/ui • Tabler Icons • Day.js • React Hot Toast |
+| **Packages & Config** | RBAC with CASL • ESLint • Prettier • T3 Env                                                                                                                     |
+| **Deployment**        | Vercel • Render • Neon                                                                                                                                          |
+
+---
+
+## 🧩 Project Structure
+
+- **Monorepo** managed with **Turborepo**
+- Separate **apps** for `web` and `api`
+- **Full integration** between backend and frontend
+- **Authentication** via OAuth (GitHub and Google)
+- **Role-based access control (RBAC)** with CASL
+- **Database** powered by **PostgreSQL** and **Prisma**
+- **File uploads** using **Cloudflare R2**
+
+---
+
+## ⚙️ Core Features
+
+- Authentication and authorization with RBAC
+- Multi-tenant architecture
+- OAuth provider integration
+- Schema validation with Zod
+- Modular UI built with TailwindCSS and Radix
+- Automated deployment on Vercel and Render
+
+---
+
+## 📚 Purpose
+
+This project serves as a **learning resource** and **starter template** for building modern, scalable, and secure SaaS applications using the **Next.js + Fastify** stack.
+
+---
 
 ## Features
 
