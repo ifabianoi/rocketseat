@@ -2,9 +2,9 @@
   "name": "next-saas-rbac",
   "private": true,
   "scripts": {
-    "dev": "pnpm turbo dev --filter=@saas/web",
-    "build": "pnpm turbo run build --filter=@saas/web",
-    "lint": "pnpm turbo run lint"
+    "dev": "npx turbo run dev --filter=@saas/web",
+    "build": "npx turbo run build --filter=@saas/web",
+    "lint": "npx turbo run lint"
   },
   "devDependencies": {
     "turbo": "^2.2.3"
