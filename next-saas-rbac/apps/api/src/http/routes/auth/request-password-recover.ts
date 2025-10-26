@@ -44,6 +44,6 @@ export async function requestPasswordRecover(app: FastifyInstance) {
       console.log(`Recover password token: ${code}`)
 
       return reply.status(201).send()
-    }
+    },
   )
 }

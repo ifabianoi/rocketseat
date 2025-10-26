@@ -61,6 +61,6 @@ export async function rejectInvite(app: FastifyInstance) {
         })
 
         return reply.status(204).send()
-      }
+      },
     )
 }

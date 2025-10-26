@@ -41,6 +41,6 @@ export async function getMembership(app: FastifyInstance) {
             organizationId: membership.organizationId,
           },
         }
-      }
+      },
     )
 }

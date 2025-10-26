@@ -26,7 +26,7 @@ export async function getOrganizations(app: FastifyInstance) {
                   slug: zod.string(),
                   avatarUrl: zod.string().url().nullable(),
                   role: roleSchema,
-                })
+                }),
               ),
             }),
           },
@@ -65,12 +65,12 @@ export async function getOrganizations(app: FastifyInstance) {
               ...org,
               role: members[0].role,
             }
-          }
+          },
         )
 
         return {
           organizations: organizationsWithUserRole,
         }
-      }
+      },
     )
 }

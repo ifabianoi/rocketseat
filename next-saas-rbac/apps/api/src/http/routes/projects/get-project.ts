@@ -85,6 +85,6 @@ export async function getProject(app: FastifyInstance) {
         }
 
         return reply.send({ project })
-      }
+      },
     )
 }

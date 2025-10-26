@@ -50,6 +50,6 @@ export async function getProfile(app: FastifyInstance) {
         }
 
         return reply.send({ user })
-      }
+      },
     )
 }
