@@ -1,12 +1,13 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { BadRequestError } from '../_errors/bad-request-error'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function revokeInvite(app: FastifyInstance) {
   app
@@ -16,8 +17,8 @@ export async function revokeInvite(app: FastifyInstance) {
       '/organizations/:slug/invites/:inviteId',
       {
         schema: {
-          tags: ['Invites'],
-          summary: 'Revoke a invite',
+          tags: ['invites'],
+          summary: 'Revoke an invite',
           security: [{ bearerAuth: [] }],
           params: z.object({
             slug: z.string(),

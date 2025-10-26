@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 
@@ -12,7 +12,7 @@ export async function getOrganization(app: FastifyInstance) {
       '/organizations/:slug',
       {
         schema: {
-          tags: ['Organizations'],
+          tags: ['organizations'],
           summary: 'Get details from organization',
           security: [{ bearerAuth: [] }],
           params: z.object({

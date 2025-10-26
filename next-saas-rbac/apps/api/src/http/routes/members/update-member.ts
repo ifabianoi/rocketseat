@@ -1,12 +1,13 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function updateMember(app: FastifyInstance) {
   app
@@ -16,7 +17,7 @@ export async function updateMember(app: FastifyInstance) {
       '/organizations/:slug/members/:memberId',
       {
         schema: {
-          tags: ['Members'],
+          tags: ['members'],
           summary: 'Update a member',
           security: [{ bearerAuth: [] }],
           params: z.object({

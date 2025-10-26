@@ -1,11 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getOrganizationBilling(app: FastifyInstance) {
   app
@@ -15,12 +16,10 @@ export async function getOrganizationBilling(app: FastifyInstance) {
       '/organizations/:slug/billing',
       {
         schema: {
-          tags: ['Billing'],
+          tags: ['billing'],
           summary: 'Get billing information from organization',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-          }),
+          params: z.object({ slug: z.string() }),
           response: {
             200: z.object({
               billing: z.object({

@@ -1,10 +1,11 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
+
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function getProfile(app: FastifyInstance) {
   app
@@ -14,7 +15,7 @@ export async function getProfile(app: FastifyInstance) {
       '/profile',
       {
         schema: {
-          tags: ['Auth'],
+          tags: ['auth'],
           summary: 'Get authenticated user profile',
           security: [{ bearerAuth: [] }],
           response: {

@@ -1,10 +1,11 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
+
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function acceptInvite(app: FastifyInstance) {
   app
@@ -14,8 +15,9 @@ export async function acceptInvite(app: FastifyInstance) {
       '/invites/:inviteId/accept',
       {
         schema: {
-          tags: ['Invites'],
+          tags: ['invites'],
           summary: 'Accept an invite',
+          security: [{ bearerAuth: [] }],
           params: z.object({
             inviteId: z.string().uuid(),
           }),

@@ -3,7 +3,7 @@ import { ability } from '@/auth/auth'
 import { Invites } from './invites'
 import { MemberList } from './member-list'
 
-export default async function MembersPage() {
+export default async function Members() {
   const permissions = await ability()
 
   return (

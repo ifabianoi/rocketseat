@@ -1,5 +1,5 @@
 import { SignInForm } from './sign-in-form'
 
-export default function SignInPage() {
+export default function SignIn() {
   return <SignInForm />
 }

@@ -1,7 +1,7 @@
 import { projectSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -17,7 +17,7 @@ export async function updateProject(app: FastifyInstance) {
       '/organizations/:slug/projects/:projectId',
       {
         schema: {
-          tags: ['Projects'],
+          tags: ['projects'],
           summary: 'Update a project',
           security: [{ bearerAuth: [] }],
           body: z.object({
@@ -50,8 +50,9 @@ export async function updateProject(app: FastifyInstance) {
           throw new BadRequestError('Project not found.')
         }
 
-        const { cannot } = getUserPermissions(userId, membership.role)
         const authProject = projectSchema.parse(project)
+
+        const { cannot } = getUserPermissions(userId, membership.role)
 
         if (cannot('update', authProject)) {
           throw new UnauthorizedError(

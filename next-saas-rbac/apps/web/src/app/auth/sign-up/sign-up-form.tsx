@@ -16,9 +16,8 @@ import { signInWithGithub } from '../actions'
 import { signUpAction } from './actions'
 
 export function SignUpForm() {
-  const [{ errors, message, success }, handleSubmit, isPending] = useFormState(
-    signUpAction
-  )
+  const [{ success, message, errors }, handleSubmit, isPending] =
+    useFormState(signUpAction)
 
   return (
     <div className="space-y-4">
@@ -26,7 +25,7 @@ export function SignUpForm() {
         {success === false && message && (
           <Alert variant="destructive">
             <AlertTriangle className="size-4" />
-            <AlertTitle>Sign up failed!</AlertTitle>
+            <AlertTitle>Sign in failed!</AlertTitle>
             <AlertDescription>
               <p>{message}</p>
             </AlertDescription>
@@ -81,7 +80,7 @@ export function SignUpForm() {
           )}
         </div>
 
-        <Button className="w-full" type="submit" disabled={isPending}>
+        <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
@@ -89,17 +88,17 @@ export function SignUpForm() {
           )}
         </Button>
 
-        <Button className="w-full" variant="link" size="sm" asChild>
-          <Link href="/auth/sign-in">Already registered? Sign In</Link>
+        <Button variant="link" size="sm" asChild className="w-full">
+          <Link href="/auth/sign-in">Already registered? Sign in</Link>
         </Button>
       </form>
 
       <Separator />
 
       <form action={signInWithGithub}>
-        <Button type="submit" className="w-full" variant="outline">
-          <Image src={githubIcon} alt="" className="mr-2 size-4 dark:invert" />
-          Sign up with GitHub
+        <Button type="submit" variant="outline" className="w-full">
+          <Image src={githubIcon} alt="" className="mr-2 size-4" />
+          Sign up with Github
         </Button>
       </form>
     </div>

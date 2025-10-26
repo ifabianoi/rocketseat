@@ -1,13 +1,14 @@
 import { organizationSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { BadRequestError } from '../_errors/bad-request-error'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function updateOrganization(app: FastifyInstance) {
   app
@@ -17,7 +18,7 @@ export async function updateOrganization(app: FastifyInstance) {
       '/organizations/:slug',
       {
         schema: {
-          tags: ['Organizations'],
+          tags: ['organizations'],
           summary: 'Update organization details',
           security: [{ bearerAuth: [] }],
           body: z.object({
@@ -39,8 +40,6 @@ export async function updateOrganization(app: FastifyInstance) {
         const { membership, organization } =
           await request.getUserMembership(slug)
 
-        const { name, domain, shouldAttachUsersByDomain } = request.body
-
         const authOrganization = organizationSchema.parse(organization)
 
         const { cannot } = getUserPermissions(userId, membership.role)
@@ -50,6 +49,8 @@ export async function updateOrganization(app: FastifyInstance) {
             `You're not allowed to update this organization.`,
           )
         }
+
+        const { name, domain, shouldAttachUsersByDomain } = request.body
 
         if (domain) {
           const organizationByDomain = await prisma.organization.findFirst({

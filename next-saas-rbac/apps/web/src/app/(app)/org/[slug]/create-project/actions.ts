@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { getCurrentOrg } from '@/auth/auth'
 import { createProject } from '@/http/create-project'
 
-const projectSchema = z.object({
+const ProjectSchema = z.object({
   name: z
     .string()
     .min(4, { message: 'Please, include at least 4 characters.' }),
@@ -14,7 +14,7 @@ const projectSchema = z.object({
 })
 
 export async function createProjectAction(data: FormData) {
-  const result = projectSchema.safeParse(Object.fromEntries(data))
+  const result = ProjectSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
     const errors = result.error.flatten().fieldErrors

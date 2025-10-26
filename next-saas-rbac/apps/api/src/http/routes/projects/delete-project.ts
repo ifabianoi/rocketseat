@@ -1,7 +1,7 @@
 import { projectSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -17,7 +17,7 @@ export async function deleteProject(app: FastifyInstance) {
       '/organizations/:slug/projects/:projectId',
       {
         schema: {
-          tags: ['Projects'],
+          tags: ['projects'],
           summary: 'Delete a project',
           security: [{ bearerAuth: [] }],
           params: z.object({
@@ -45,9 +45,10 @@ export async function deleteProject(app: FastifyInstance) {
         if (!project) {
           throw new BadRequestError('Project not found.')
         }
+        
+        const authProject = projectSchema.parse(project)
 
         const { cannot } = getUserPermissions(userId, membership.role)
-        const authProject = projectSchema.parse(project)
 
         if (cannot('delete', authProject)) {
           throw new UnauthorizedError(

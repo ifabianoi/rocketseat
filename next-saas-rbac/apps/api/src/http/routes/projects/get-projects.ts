@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
@@ -15,7 +15,7 @@ export async function getProjects(app: FastifyInstance) {
       '/organizations/:slug/projects',
       {
         schema: {
-          tags: ['Projects'],
+          tags: ['projects'],
           summary: 'Get all organization projects',
           security: [{ bearerAuth: [] }],
           params: z.object({
@@ -72,7 +72,6 @@ export async function getProjects(app: FastifyInstance) {
               select: {
                 id: true,
                 name: true,
-                email: true,
                 avatarUrl: true,
               },
             },

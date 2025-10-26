@@ -11,6 +11,22 @@ export async function isAuthenticated() {
   return cookieStore.get('token')?.value
 }
 
+export async function auth() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
+
+  if (!token) {
+    redirect('/auth/sign-in')
+  }
+
+  try {
+    const { user } = await getProfile()
+
+    return { user }
+  } catch {}
+
+  redirect('/api/auth/sign-out')
+}
 
 export async function getCurrentOrg() {
   const cookieStore = await cookies()
@@ -43,21 +59,4 @@ export async function ability() {
   })
 
   return ability
-}
-
-export async function auth() {
-  const cookieStore = await cookies()
-  const token = cookieStore.get('token')?.value
-
-  if (!token) {
-    redirect('/auth/sign-in')
-  }
-
-  try {
-    const { user } = await getProfile()
-
-    return { user }
-  } catch {}
-
-  redirect('/api/auth/sign-out')
 }

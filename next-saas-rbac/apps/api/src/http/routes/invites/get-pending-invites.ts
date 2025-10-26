@@ -1,11 +1,12 @@
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
+import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
-import { BadRequestError } from '../_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
+
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function getPendingInvites(app: FastifyInstance) {
   app
@@ -15,7 +16,7 @@ export async function getPendingInvites(app: FastifyInstance) {
       '/pending-invites',
       {
         schema: {
-          tags: ['Invites'],
+          tags: ['invites'],
           summary: 'Get all user pending invites',
           security: [{ bearerAuth: [] }],
           response: {

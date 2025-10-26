@@ -5,9 +5,9 @@
   "main": "index.ts",
   "types": "index.ts",
   "devDependencies": {
-    "@saas/eslint-config": "workspace:*",
-    "@saas/prettier": "workspace:*",
-    "@saas/tsconfig": "workspace:*",
+    "@saas/eslint-config": "*",
+    "@saas/prettier": "*",
+    "@saas/tsconfig": "*",
     "@types/node": "^24.9.1"
   },
   "eslintConfig": {
@@ -17,7 +17,7 @@
   },
   "prettier": "@saas/prettier",
   "dependencies": {
-    "@t3-oss/env-nextjs": "^0.9.2",
-    "zod": "^3.22.4"
+    "@t3-oss/env-nextjs": "^0.11.1",
+    "zod": "^3.23.8"
   }
 }
