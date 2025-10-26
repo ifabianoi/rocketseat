@@ -6,7 +6,7 @@ import * as zod from 'zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
-import { BadRequestError } from '../_errors/bad-request-error'
+import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 
 export async function getPendingInvites(app: FastifyInstance) {
   app
