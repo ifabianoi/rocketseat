@@ -10,7 +10,6 @@ export async function Tabs() {
 
   const canUpdateOrganization = permissions?.can('update', 'Organization')
   const canGetBilling = permissions?.can('get', 'Billing')
-
   const canGetMembers = permissions?.can('get', 'User')
   const canGetProjects = permissions?.can('get', 'Project')
 
@@ -19,10 +18,10 @@ export async function Tabs() {
       <nav className="mx-auto flex max-w-[1200px] items-center gap-2">
         {canGetProjects && (
           <Button
-            asChild
             variant="ghost"
             size="sm"
             className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            asChild
           >
             <NavLink href={`/org/${currentOrg}`}>Projects</NavLink>
           </Button>
@@ -30,10 +29,10 @@ export async function Tabs() {
 
         {canGetMembers && (
           <Button
-            asChild
             variant="ghost"
             size="sm"
             className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            asChild
           >
             <NavLink href={`/org/${currentOrg}/members`}>Members</NavLink>
           </Button>
@@ -41,10 +40,10 @@ export async function Tabs() {
 
         {(canUpdateOrganization || canGetBilling) && (
           <Button
-            asChild 
             variant="ghost"
             size="sm"
             className="border border-transparent text-muted-foreground data-[current=true]:border-border data-[current=true]:text-foreground"
+            asChild
           >
             <NavLink href={`/org/${currentOrg}/settings`}>
               Settings & Billing
